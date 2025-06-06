@@ -21,14 +21,14 @@
                             $user = $inviter->inviter;
                         @endphp
                         <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-xs text-gray-900">{{ $i }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-xs text-gray-900">{{ $user->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-xs text-gray-900">{{ $user->email }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-center text-xs text-gray-900">{{ $user->roles->pluck('name')->join(', ') }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-left text-xs text-gray-900">{{ $i }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-left text-xs text-gray-900">{{ $user->name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-left text-xs text-gray-900">{{ $user->email }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-left text-xs text-gray-900">{{ $user->roles->pluck('name')->join(', ') }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="px-6 py-4 text-center text-gray-500">No users found.</td>
+                            <td colspan="4" class="px-6 py-4 text-left text-gray-500">No users found.</td>
                         </tr>
                     @endforelse
                 </tbody>

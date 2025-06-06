@@ -20,17 +20,17 @@
                             $key = 1 + $key;
                         @endphp
                         <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-900">{{ $key }}</td>
-                            <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-blue-700 font-mono">
+                            <td class="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-900">{{ $key }}</td>
+                            <td class="px-6 py-4 text-left whitespace-nowrap text-sm text-blue-700 font-mono">
                                 <a href="{{ $shortUrl->original_url }}" target="_blank" class="underline">{{ $shortUrl->short_code }}</a>
                             </td>
-                            <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-900 break-all">{{ $shortUrl->original_url }}</td>
-                            <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-900">{{ $shortUrl->user->name ?? 'N/A' }}</td>
-                            <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-900">{{ $shortUrl->created_at->format('Y-m-d H:i') }}</td>
+                            <td class="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-900 break-all">{{ $shortUrl->original_url }}</td>
+                            <td class="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-900">{{ $shortUrl->user->name ?? 'N/A' }}</td>
+                            <td class="px-6 py-4 text-left whitespace-nowrap text-sm text-gray-900">{{ $shortUrl->created_at->format('Y-m-d H:i') }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">No short URLs found.</td>
+                            <td colspan="5" class="px-6 py-4 text-left text-gray-500">No short URLs found.</td>
                         </tr>
                     @endforelse
                 </tbody>
