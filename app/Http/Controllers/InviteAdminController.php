@@ -47,13 +47,13 @@ class InviteAdminController extends Controller
         $user->assignRole($request->role);
         // Store invite record
         //update query using Invite models
-        if(Auth::user()->roles == 'Admin' ) {
+      //  if(Auth::user()->roles == 'Admin' ) {
              Invite::create([
                     'user_id' => $user->id,
                     'invite_id' => Auth::user()->id,
                     'role' => $request->role,
                 ]);
-        }
+      //  }
 
         return redirect()->route('companies.invite-list')->with('success', $request->role . ' invited!');
     }
