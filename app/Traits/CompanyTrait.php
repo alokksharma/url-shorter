@@ -36,7 +36,7 @@ trait CompanyTrait
         $user = Auth::user();
         if ($user->hasRole('Admin')) {
             // Get all invites where this user is the inviter
-            return Invite::where('invite_id', $user->id)->paginate(1);
+            return Invite::where('invite_id', $user->id)->paginate(2);
         } elseif ($user->hasRole('SuperAdmin')) {
             // Get all invites where this user is invited
             return Invite::paginate(2);

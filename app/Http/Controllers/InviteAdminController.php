@@ -31,12 +31,19 @@ class InviteAdminController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-          //  'password' => 'required|string|min:6',
-            'role' => 'required|in:Admin,Member',
-        ]);
+        if(Auth::user()->hasRole('SuperAdmin')) {
+                $request->validate([
+                    'name' => 'required|string|max:255',
+                    'email' => 'required|email|unique:users,email',
+                ]);
+        }else{
+             $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'role' => 'required|in:Admin,Member',
+            ]);
+        }
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -44,14 +51,20 @@ class InviteAdminController extends Controller
             'company' => Auth::user()->company, // Use the current user's company
 
         ]);
-        $user->assignRole($request->role);
+        if(Auth::user()->hasRole('SuperAdmin')) {
+            $user->assignRole('SuperAdmin'); // Default role for SuperAdmin inviting
+            $role = 'SuperAdmin';
+        } else {
+            $user->assignRole($request->role); // Assign the role based on the request
+             $role = $request->role;
+        }
+     //   $user->assignRole($request->role);
         // Store invite record
         //update query using Invite models
       //  if(Auth::user()->roles == 'Admin' ) {
              Invite::create([
                     'user_id' => $user->id,
                     'invite_id' => Auth::user()->id,
-                    'role' => $request->role,
                 ]);
       //  }
 

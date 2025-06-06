@@ -26,6 +26,10 @@
                         <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required />
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div> --}}
+                    {{-- add condition role is not superamin --}}
+
+
+                   @if (auth()->user()->hasRole('Admin'))
                     <div class="mb-4">
                         <x-input-label for="role" :value="__('Role')" />
                         <select id="role" name="role" class="block mt-1 w-full" required>
@@ -36,6 +40,7 @@
                         </select>
                         <x-input-error :messages="$errors->get('role')" class="mt-2" />
                     </div>
+                    @endif
                     <div class="flex items-center justify-end">
                         <a href="{{ route('companies.invite-list') }}" class="mr-4 underline text-sm text-gray-600 hover:text-gray-900">Back</a>
                         <x-primary-button>
