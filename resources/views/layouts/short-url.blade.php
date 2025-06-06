@@ -22,7 +22,7 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-900">{{ $key }}</td>
                             <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-blue-700 font-mono">
-                                <a href="{{ url('/s/' . $shortUrl->short_code) }}" target="_blank" class="underline">{{ $shortUrl->short_code }}</a>
+                                <a href="{{ $shortUrl->original_url }}" target="_blank" class="underline">{{ $shortUrl->short_code }}</a>
                             </td>
                             <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-900 break-all">{{ $shortUrl->original_url }}</td>
                             <td class="px-6 py-4 text-center whitespace-nowrap text-sm text-gray-900">{{ $shortUrl->user->name ?? 'N/A' }}</td>
