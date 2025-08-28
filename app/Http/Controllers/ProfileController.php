@@ -68,8 +68,23 @@ class ProfileController extends Controller
 
     public function dashboard(Request $request): View
     {
-         $shortUrls = $this->shortUrlList();
-        $users = $this->inviteList();
-        return view('dashboard', compact('shortUrls', 'users'));
+        if (Auth::user()->hasRole('SuperAdmin')) {
+          $userCount =  $this->userCount('SuperAdmin');
+          $shortUrlsCount = \App\Models\ShortUrl::count();
+        }elseif (Auth::user()->hasRole('Admin')) {
+          $userCount =  $this->userCount('Admin');
+          //short url count based on company id which place in users table
+            $shortUrlsCount = \App\Models\ShortUrl::whereIn('user_id', function($query) {
+                    $query->select('id')
+                        ->from('users')
+                        ->where('company_id', Auth::user()->company_id);
+                })->count();
+        }else{
+          $userCount = 0;
+            $shortUrlsCount = \App\Models\ShortUrl::where('user_id', Auth::id())->count();
+        }
+        // $shortUrls = $this->shortUrlList();
+        //$users = $this->inviteList();
+        return view('dashboard', compact('userCount', 'shortUrlsCount'));
     }
 }

@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'company',
+        'company_id',
     ];
 
     /**
@@ -44,6 +44,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function invites()
+    {
+        return $this->hasMany(Invite::class, 'user_id');
+    }
+
+    public function shortUrls()
+    {
+        return $this->hasMany(ShortUrl::class);
+    }
 
 
 }

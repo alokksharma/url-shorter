@@ -35,6 +35,7 @@ class InviteAdminController extends Controller
                 $request->validate([
                     'name' => 'required|string|max:255',
                     'email' => 'required|email|unique:users,email',
+                    'company_name' => 'required|string|max:255',
                 ]);
         }else{
              $request->validate([
@@ -43,17 +44,26 @@ class InviteAdminController extends Controller
                 'role' => 'required|in:Admin,Member',
             ]);
         }
+       // dd($request->all());
+        //Create Company if role is Superadmin
+        if(Auth::user()->hasRole('SuperAdmin')) {
+            $company = $request->company_name;
+            $newCompany = \App\Models\Company::create(['name' => $company]);
+            $companyId = $newCompany->id;
+        } else {
+            $companyId = Auth::user()->company_id; // Use the current user's company_id
+        }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'company_id' => $companyId,
             'password' => Hash::make('12345678'),
-            'company' => Auth::user()->company, // Use the current user's company
 
         ]);
         if(Auth::user()->hasRole('SuperAdmin')) {
-            $user->assignRole('SuperAdmin'); // Default role for SuperAdmin inviting
-            $role = 'SuperAdmin';
+            $user->assignRole('Admin'); // Default role for SuperAdmin inviting
+            $role = 'Admin';
         } else {
             $user->assignRole($request->role); // Assign the role based on the request
              $role = $request->role;
@@ -68,7 +78,7 @@ class InviteAdminController extends Controller
                 ]);
       //  }
 
-        return redirect()->route('companies.invite-list')->with('success', $request->role . ' invited!');
+        return redirect()->route('companies.invite-list')->with('success', $request->role . ' created successfully!');
     }
 
     public function index()
